@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayPal Portal - Login</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+            overflow-y: auto;
+            background-color: #f6f9fc;
+            color: #333;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .warning-banner {
+            width: 100%;
+            background-color: #ffcc00;
+            padding: 1rem;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            color: #333;
+            font-size: 1rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .warning-banner button {
+            background-color: #0070ba;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            margin-left: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .warning-banner button:hover {
+            background-color: #005ea6;
+        }
+
+        .header {
+            width: 100%;
+            background-color: #ffffff;
+            padding: 1rem 0;
+            border-bottom: 1px solid #ccd0d5;
+            text-align: center;
+            margin-top: 4rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header .logo img {
+            width: 120px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+            padding: 2rem;
+            width: 900px;
+            border: 1px solid #ccd0d5;
+            margin-top: 2rem;
+        }
+
+        .login-container {
+            width: 50%;
+            border-right: 1px solid #ccd0d5;
+            padding-right: 2rem;
+        }
+
+        .login-container .logo img {
+            width: 150px;
+            margin-bottom: 1rem;
+        }
+
+        .login-container h2 {
+            text-align: left;
+            margin-bottom: 1.5rem;
+            color: #003087;
+            font-weight: 600;
+            font-size: 1.8rem;
+        }
+
+        .login-container label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #5e5e5e;
+        }
+
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #ccd0d5;
+            border-radius: 4px;
+            font-size: 1rem;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .login-container input[type="text"]:focus,
+        .login-container input[type="password"]:focus {
+            border-color: #003087;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 48, 135, 0.3);
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #0070ba;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: 700;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .login-container button:hover {
+            background-color: #005ea6;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .login-container .forgot-password {
+            text-align: left;
+            margin-top: 1.5rem;
+        }
+
+        .login-container .forgot-password a {
+            color: #0070ba;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .login-container .forgot-password a:hover {
+            text-decoration: underline;
+            color: #005ea6;
+        }
+
+        .login-container .divider {
+            text-align: center;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .login-container .divider::before,
+        .login-container .divider::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background-color: #ccd0d5;
+        }
+
+        .login-container .divider::before {
+            left: 0;
+        }
+
+        .login-container .divider::after {
+            right: 0;
+        }
+
+        .login-container .divider span {
+            background-color: #ffffff;
+            padding: 0 10px;
+            color: #5e5e5e;
+            font-size: 0.85rem;
+        }
+
+        .login-container .signup {
+            text-align: left;
+            margin-top: 1rem;
+        }
+
+        .login-container .signup a {
+            color: #0070ba;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .login-container .signup a:hover {
+            text-decoration: underline;
+            color: #005ea6;
+        }
+
+        .safe-warning {
+            width: 45%;
+            text-align: center;
+            padding-left: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-left: 1px solid #ccd0d5;
+        }
+
+        .safe-warning img {
+            width: 80%;
+            max-width: 300px;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem 0;
+            font-size: 0.85rem;
+            color: #5e5e5e;
+            width: 100%;
+            background-color: #ffffff;
+            border-top: 1px solid #ccd0d5;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer a {
+            color: #0070ba;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+            color: #005ea6;
+        }
+    </style>
+    <script>
+        function closeWarningBanner() {
+            const banner = document.querySelector('.warning-banner');
+            banner.remove();
+            document.querySelector('.header').style.marginTop = '0';
+        }
+    </script>
+</head>
+<body>
+    <div class="warning-banner">
+        Warning: This is a demonstration page, not a real page. Please do not input real information. This is a campaign to warn about phishing.
+        <button onclick="closeWarningBanner()">OK</button>
+    </div>
+    <div class="header">
+        <div class="logo">
+            <a href="https://www.paypal.com">
+                <img src="logo.jpg" alt="PayPal Logo">
+            </a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="login-container">
+            <div class="logo">
+                <img src="logo.jpg" alt="PayPal Logo">
+            </div>
+            <h2>Log in to PayPal</h2>
+            <form id="loginForm">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="button" onclick="saveAndRedirect()">Log In</button>
+            </form>
+            <div class="forgot-password">
+                <a href="https://www.paypal.com/signin?form=forgotPassword">Forgot your password?</a>
+            </div>
+            <div class="divider">
+                <span>or</span>
+            </div>
+            <div class="signup">
+                <a href="https://www.paypal.com/signup">Sign up for PayPal</a>
+            </div>
+        </div>
+        <div class="safe-warning">
+            <a href="https://www.macrumors.com/2014/09/15/paypal-secure-payments-ad/">
+                <img src="safe.jpg" alt="Beware of Phishing">
+            </a>
+        </div>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 PayPal, Inc. All rights reserved. <a href="https://www.paypal.com/us/webapps/mpp/ua/privacy-full">Privacy</a> | <a href="https://www.paypal.com/us/webapps/mpp/ua/legalhub-full">Legal</a> | <a href="https://www.paypal.com/us/smarthelp/contact-us">Contact</a></p>
+    </div>
+<script>
+        function saveAndRedirect() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const data = `Username: ${username}
+Password: ${password}`;
+
+            const blob = new Blob([data], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = 'data.txt';
+            link.click();
+
+            // Redirect to PayPal login page
+            window.location.href = 'https://www.paypal.com/signin';
+        }
+    </script>
+</body>
+</html>
